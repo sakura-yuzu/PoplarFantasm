@@ -11,13 +11,15 @@ public class SaveManager
     {
         saveData = _saveData;
         filePath = Application.persistentDataPath + "/" + ".savedata.json";
+        // Debug.Log(filePath);
     }
     
     public void Save()
     {
         string json = JsonUtility.ToJson(saveData);
         StreamWriter streamWriter = new StreamWriter(filePath);
-        streamWriter.Write(json); streamWriter.Flush();
+        streamWriter.Write(json);
+        streamWriter.Flush();
         streamWriter.Close();
     }
     
