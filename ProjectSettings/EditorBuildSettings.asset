@@ -11,4 +11,6 @@ EditorBuildSettings:
   - enabled: 1
     path: Assets/Scenes/ButtleScene.unity
     guid: d74344964a4735a4fbd1634a9ae8eb96
-  m_configObjects: {}
+  m_configObjects:
+    com.unity.addressableassets: {fileID: 11400000, guid: 51924450df8d5f0479894f73d2167ea3, type: 2}
+    com.unity.localization.settings: {fileID: 11400000, guid: 2b817cdab667d1d49a075dedb03bf1bd, type: 2}
