@@ -1,0 +1,5 @@
+﻿Key,Id,Custom(e-ja),English(en),Japanese(ja),Spanish(es)
+InitialScene_Please_set_your_name,57290809344,あなたのなまえをおしえてください,Please input your name,プレイヤーの名前を入力してください,hogehoge
+InitialScene_Decision,7349277057024,けってい,OK,決定,hogehoge
+InitialScene_Name,7642777673728,なまえ,Name,名前,hogehoge
+Hello_UserName,23722535444480,こんにちは、{saveData.playerName},Hi {saveData.playerName},こんにちは、{saveData.playerName},hoge {saveData.playerName}

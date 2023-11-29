@@ -32,7 +32,7 @@ MonoBehaviour:
     m_Metadata:
       m_Items: []
   - m_Id: 23722535444480
-    m_Localized: Hi, {saveData.playerName}
+    m_Localized: Hi {saveData.playerName}
     m_Metadata:
       m_Items:
       - rid: 8787986896098164748
