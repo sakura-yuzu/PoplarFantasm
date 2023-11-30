@@ -71,13 +71,19 @@ crashlytics-build.properties
 /[Aa]ssets/[Ss]treamingAssets/aa.meta
 /[Aa]ssets/[Ss]treamingAssets/aa/*
 
+# 大きすぎるので除外
 /Assets/Project/Fonts/**/*.otf
 /Assets/Project/Fonts/**/*.ttf
 /Assets/Project/Fonts/**/*.asset
 /Assets/Project/Fonts/**/*.meta
 
-/Assets/Project/Resources/Sounds/**/*
-!README.md
+# 一旦うるさいので黙らせる
+/Assets/Macros/Entities/Data/**/*
 
+# 外部パッケージ
+/Assets/TextMesh Pro/**/*
+/Assets/AddressableAssetsData/**/*
+/Assets/Fonts/**/*
 /Assets/unity-chan!/**/*
-/Assets/SAColliderBuilder/**/*
+/Assets/Plugins/ScenarioFlow/**/*
+/Assets/Plugins/UniTask/**/*
