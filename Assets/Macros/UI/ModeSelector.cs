@@ -12,7 +12,7 @@ using UnityEngine.UI;
 
 using TMPro;
 
-class LocaleSelector : MonoBehaviour
+class ModeSelector : MonoBehaviour
 {
 	public UniTask waitKeyDown(){
 		return UniTask.WaitUntil(() => Input.GetKeyDown(KeyCode.Return));
@@ -32,10 +32,6 @@ class LocaleSelector : MonoBehaviour
 
 		Toggle selected = this.gameObject.GetComponent<ToggleGroup>().ActiveToggles().First<Toggle>();
 		string value = selected.GetComponent<ButtonWithValue>().value;
-
-		// これちょっと余計な仕事じゃないかしら
-		Locale locale = LocalizationSettings.AvailableLocales.GetLocale(value);
-		LocalizationSettings.SelectedLocale = locale;
 
 		return value;
 	}

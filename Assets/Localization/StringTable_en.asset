@@ -40,6 +40,27 @@ MonoBehaviour:
     m_Localized: Save
     m_Metadata:
       m_Items: []
+  - m_Id: 2939254339297280
+    m_Localized: StoryMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2939438716706816
+    m_Localized: PeaceMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2939533470228480
+    m_Localized: StrongMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2939799393296384
+    m_Localized: In this mode, all parameters of the player are maxed out from the
+      beginning.
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2941838261248000
+    m_Localized: The final boss does not appear in this mode.
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:

@@ -1,5 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Threading;
+using Cysharp.Threading.Tasks;
 
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -7,21 +9,23 @@ using UnityEngine.UI;
 using UnityEngine.SceneManagement;
 
 using TMPro;
-class PlayerNameSettings : MonoBehaviour{
+class PlayerNameSettings : MonoBehaviour {
 
 	public SaveData saveData;
 
 	public Button decideButton;
 	public TMP_InputField inputName;
 
+	private AsyncUnityEventHandler buttonEvent;
+
 	void Start(){
-		decideButton.onClick.AddListener(DecideName);
+		buttonEvent = decideButton.onClick.GetAsyncEventHandler(CancellationToken.None);
 	}
 
 	//　ボタンが選択された時に実行
-	void DecideName()
+	public async UniTask<string> DecideNameAsync()
 	{
-		var name = inputName.GetComponent<TMP_InputField>().text;
-		saveData.playerName = name;
+		await buttonEvent.OnInvokeAsync();
+		return inputName.GetComponent<TMP_InputField>().text;
 	}
 }

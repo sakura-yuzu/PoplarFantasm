@@ -35,6 +35,26 @@ MonoBehaviour:
     m_Key: MainMenu_SaveButton
     m_Metadata:
       m_Items: []
+  - m_Id: 2939254339297280
+    m_Key: StoryMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2939438716706816
+    m_Key: PeaceMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2939533470228480
+    m_Key: StrongMode
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2939799393296384
+    m_Key: StrondMode_Description
+    m_Metadata:
+      m_Items: []
+  - m_Id: 2941838261248000
+    m_Key: PeaceMode_Description
+    m_Metadata:
+      m_Items: []
   m_Metadata:
     m_Items: []
   m_KeyGenerator:
