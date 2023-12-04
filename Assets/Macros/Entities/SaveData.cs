@@ -9,6 +9,8 @@ using UnityEngine;
 public class SaveData : ScriptableObject
 {
     public string playerName;
+    public string selectedLocale;
+    public string selectedMode;
     public int hp;
     public int mp;
 
