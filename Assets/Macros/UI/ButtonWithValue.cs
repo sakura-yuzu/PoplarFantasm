@@ -40,12 +40,7 @@ class ButtonWithValue : MonoBehaviour, ISelectHandler, IDeselectHandler, IPointe
 
 	public void OnPointerClick(PointerEventData e){
 		// Toggleでイベント吸っちゃってToggleGroup側で検知できなかったので力技
-		// TODO: ToggleGroup用のスクリプト作ろうね
-		if(ToggleGroup.GetComponent<LocaleSelector>()){
-			ToggleGroup.GetComponent<LocaleSelector>().OnPointerClick(e);
-		}else{
-			ToggleGroup.GetComponent<ModeSelector>().OnPointerClick(e);
-		}
+		ToggleGroup.GetComponent<IToggleGroup>().OnPointerClick();
 		
 	}
 }
