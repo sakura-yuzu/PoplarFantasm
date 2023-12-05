@@ -11,7 +11,6 @@ using TMPro;
 public class InitialSceneController : MonoBehaviour
 {
 	public SaveData saveData;
-	public GameObject SelectLanguage;
 	public GameObject InputName;
 	public GameObject SelectMode;
 	public Canvas LoadingOverlay;
@@ -21,7 +20,6 @@ public class InitialSceneController : MonoBehaviour
 	async void Start(){
 		saveManager = new SaveManager(saveData);
 
-		VisibleLanguageSelect(false);
 		VisibleInputName(false);
 		VisibleModeSelect(false);
 		LoadingOverlay.enabled = false;
@@ -37,11 +35,6 @@ public class InitialSceneController : MonoBehaviour
 		Complete();
 	}
 
-	public void VisibleLanguageSelect(bool visible){
-		SelectLanguage.transform.parent.gameObject.GetComponent<Canvas>().enabled = visible;
-		SelectLanguage.GetComponent<LocaleSelector>().enabled = visible;
-	}
-
 	public void VisibleInputName(bool visible){
 		InputName.transform.parent.gameObject.GetComponent<Canvas>().enabled = visible;
 		InputName.GetComponent<PlayerNameSettings>().enabled = visible;
@@ -53,18 +46,8 @@ public class InitialSceneController : MonoBehaviour
 	}
 
 	public async UniTask PlayerInitialSettings(){
-		saveData.selectedLocale = await PlayerLanguageSetting();
 		saveData.playerName = await PlayerNameSetting();
 		saveData.selectedMode = await PlayerPlayModeSetting();
-	}
-
-	private async UniTask<string> PlayerLanguageSetting(){
-		VisibleLanguageSelect(true);
-		LocaleSelector localeSelector = SelectLanguage.GetComponent<LocaleSelector>();
-		string language = await localeSelector.selectAsync();
-		VisibleLanguageSelect(false);
-		Debug.Log(language);
-		return language;
 	}
 
 	private async UniTask<string> PlayerNameSetting(){
