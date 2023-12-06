@@ -61,6 +61,27 @@ MonoBehaviour:
     m_Localized: The final boss does not appear in this mode.
     m_Metadata:
       m_Items: []
+  - m_Id: 3619130062954496
+    m_Localized: NewGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3619263873835008
+    m_Localized: ContinueGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3619360812589056
+    m_Localized: StrongNewGame
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3619678241710080
+    m_Localized: Setting
+    m_Metadata:
+      m_Items: []
+  - m_Id: 3706830048747520
+    m_Localized: Save file already exists. Are you sure you want to delete the save
+      file and start a new game?
+    m_Metadata:
+      m_Items: []
   references:
     version: 2
     RefIds:
