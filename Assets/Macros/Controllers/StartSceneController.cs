@@ -1,3 +1,5 @@
+using Cysharp.Threading.Tasks;
+
 using UnityEngine;
 using UnityEngine.SceneManagement;
 using UnityEngine.UI;
@@ -9,7 +11,9 @@ class StartSceneController : MonoBehaviour
 	public Button modalCancelButton;
 	public Button continueGameButton;
 	public Button hyperNewGameButton;
+	public Button settingButton;
 	public Canvas confirmCanvas;
+	public GameObject SelectLanguage;
 	public SaveData saveData;
 	public SaveManager saveManager;
 
@@ -19,9 +23,12 @@ class StartSceneController : MonoBehaviour
 
 	void Start(){
 		confirmCanvas.enabled = false;
+		VisibleLanguageSelect(false);
+
 		newGameButton.onClick.AddListener(OnClickNewGameButton);
 		modalOKButton.onClick.AddListener(OnClickModalOKButton);
 		modalCancelButton.onClick.AddListener(OnClickModalCancelButton);
+		settingButton.onClick.AddListener(OnClickSettingButton);
 
 		if(saveManager.ExistsSaveFile()){
 			continueGameButton.enabled = true;
@@ -38,6 +45,13 @@ class StartSceneController : MonoBehaviour
 		// hyperNewGameButton.onClick.AddListener(OnClickHyperNewGameButton);
 	}
 
+
+	private void VisibleLanguageSelect(bool visible){
+		SelectLanguage.transform.parent.gameObject.GetComponent<Canvas>().enabled = visible;
+		SelectLanguage.GetComponent<LocaleSelector>().enabled = visible;
+	}
+
+
 	private void OnClickNewGameButton(){
 		if(saveManager.ExistsSaveFile()){
 			confirmCanvas.enabled = true;
@@ -48,6 +62,19 @@ class StartSceneController : MonoBehaviour
 
 	private void OnClickContinueGameButton(){
 		SceneManager.LoadSceneAsync("FieldScene", LoadSceneMode.Single);
+	}
+
+	private void OnClickSettingButton(){
+		PlayerLanguageSetting();
+	}
+
+	private async UniTask<string> PlayerLanguageSetting(){
+		VisibleLanguageSelect(true);
+		LocaleSelector localeSelector = SelectLanguage.GetComponent<LocaleSelector>();
+		string language = await localeSelector.selectAsync();
+		VisibleLanguageSelect(false);
+		Debug.Log(language);
+		return language;
 	}
 
 	private void OnClickModalOKButton(){
