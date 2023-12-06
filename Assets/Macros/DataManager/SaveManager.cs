@@ -23,6 +23,7 @@ public class SaveManager
         streamWriter.Close();
     }
     
+    // TODO: ファイルが破損していた場合とかのエラーハンドリングをした方がよい
     public void Load()
     { 
         if (File.Exists(filePath))
@@ -34,6 +35,10 @@ public class SaveManager
             // save = JsonUtility.FromJson<SaveData>(data);
             JsonUtility.FromJsonOverwrite(data, saveData);
         }
+    }
+
+    public bool ExistsSaveFile(){
+        return File.Exists(filePath);
     }
 
 }
