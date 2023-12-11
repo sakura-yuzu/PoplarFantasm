@@ -6,9 +6,11 @@ class FieldController : BaseController
 {
 	public Canvas MainMenu;
 	public Button saveButton;
+	public Button exitButton;
 
 	void Start(){
 		saveButton.onClick.AddListener(base.Save);
+		exitButton.onClick.AddListener(Exit);
 	}
 
 	void Update(){
@@ -18,4 +20,12 @@ class FieldController : BaseController
 		}
 	}
 
+	public void Exit(){
+		// 条件付きコンパイル
+    #if UNITY_EDITOR
+      UnityEditor.EditorApplication.isPlaying = false;
+    #else
+      Application.Quit();
+    #endif
+	}
 }
