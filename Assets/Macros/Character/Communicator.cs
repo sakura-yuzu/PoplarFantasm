@@ -37,13 +37,13 @@ public class Communicator : IReflectable
     [ScenarioMethod("talk")]
     public async UniTask Talk(string characterName, string message, CancellationToken cancellationToken)
     {
-        await UniTask.WhenAll(
-            // isDifferentActor ? SetTextAlphaAsync(textActorName, 0.0f, cancellationToken) : UniTask.CompletedTask,
-            SetTextAlphaAsync(characterSpeakArea, 0.0f, cancellationToken));
+        // await UniTask.WhenAll(
+        //     // isDifferentActor ? SetTextAlphaAsync(textActorName, 0.0f, cancellationToken) : UniTask.CompletedTask,
+        //     SetTextAlphaAsync(characterSpeakArea, 0.0f, cancellationToken));
 
         characterNameArea.text = characterName;
         characterSpeakArea.text = message;
-        // Debug.Log(message);
+        Debug.Log(message);
         await UniTask.WhenAll(
             // isDifferentActor ? SetTextAlphaAsync(characterNameArea, 1.0f, cancellationToken) : UniTask.CompletedTask,
             VisualizeTextInOrderAsync(characterSpeakArea, cancellationToken));

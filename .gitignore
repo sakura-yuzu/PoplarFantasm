@@ -86,6 +86,6 @@ crashlytics-build.properties
 /Assets/Fonts/**/*
 /Assets/Plugins/ScenarioFlow/**/*
 /Assets/Plugins/UniTask/**/*
-/Assets/Plugins/DOTween/**/*
+/Assets/Plugins/Demigiant/**/*
 
 /dest

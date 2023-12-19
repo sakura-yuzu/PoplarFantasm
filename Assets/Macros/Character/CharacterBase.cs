@@ -13,7 +13,9 @@ class CharacterBase : FieldObjectBase
     private Communicator.Settings communicatorSettings;
 
     [SerializeField]
-    private KeyProgressor.Settings keyProgressorSettings;
+    private KeyProgressor.Settings enterKeyProgressorSettings;
+    [SerializeField]
+    private KeyProgressor.Settings escapeKeyProgressorSettings;
 
     [SerializeField]
     private ButtonProgressor.Settings buttonProgressorSettings;
@@ -30,25 +32,28 @@ class CharacterBase : FieldObjectBase
     private IDisposable[] disposables;
     [SerializeField]
     private ButtonBranchSelector.Settings buttonBranchSelectorSettings;
+    [SerializeField]
+    private WindowCloser.Settings windowCloserSettings;
     private CancellationToken cancellationToken;
     private void Start()
     {
        //CancellationTokenを取得
        cancellationToken = this.GetCancellationTokenOnDestroy();
         //------Progressorの準備
-        var keyProgressor = new KeyProgressor(keyProgressorSettings);
+        var enterKeyProgressor = new KeyProgressor(enterKeyProgressorSettings);
+        var escapeKeyProgressor = new KeyProgressor(escapeKeyProgressorSettings);
         var buttonProgressor = new ButtonProgressor(buttonProgressorSettings);
 
         INextProgressor nextProgressor = new CompositeAnyNextProgressor(
             new INextProgressor[]
             {
-                        keyProgressor,
+                        enterKeyProgressor,
                         buttonProgressor,
             });
         ICancellationProgressor cancellationProgressor = new CompositeAnyCancellationProgressor(
             new ICancellationProgressor[]
             {
-                     keyProgressor,
+                     escapeKeyProgressor,
                      buttonProgressor,
             });
 
@@ -96,10 +101,11 @@ class CharacterBase : FieldObjectBase
                 //    new BackgroundAnimator(backgroundAnimatorSettings),
                   //  new ActorAnimator(),
                   //  new ActorConfigurator(),
-                  //  new DelayGenerator(),
-                   new ScenarioTaskDealer(scenarioTaskExecuter, cancellationTokenDecoder),
+                                     new DelayGenerator(),
+                                     new ScenarioTaskDealer(scenarioTaskExecuter, cancellationTokenDecoder),
                                      new BranchRecorder(channelMediator, new ButtonBranchSelector(buttonBranchSelectorSettings)),
                                      new BranchMaker(channelMediator, scenarioBookReader),
+                                     new WindowCloser(windowCloserSettings)
                         }
                  );
         IScenarioPublisher<ExcelAsset> excelScenarioPublisher =
@@ -118,7 +124,9 @@ class CharacterBase : FieldObjectBase
     {
         // 会話をwindowのtextフィールドに表示
         // ScenarioMethodをすべて実行
-        characterSpeakArea.GetComponent<Canvas>().enabled = true;
-        await ReadScenarioBook();
+        if(characterSpeakArea.GetComponent<Canvas>().enabled == false){
+            characterSpeakArea.GetComponent<Canvas>().enabled = true;
+            await ReadScenarioBook();
+        }
     }
 }
