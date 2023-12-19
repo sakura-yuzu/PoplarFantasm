@@ -5,10 +5,13 @@ using UnityEngine.UI;
 class FieldController : BaseController
 {
 	public Canvas MainMenu;
+	public Canvas CharacterSpeakArea;
 	public Button saveButton;
 	public Button exitButton;
 
 	void Start(){
+		MainMenu.enabled = false;
+		CharacterSpeakArea.enabled = false;
 		saveButton.onClick.AddListener(base.Save);
 		exitButton.onClick.AddListener(Exit);
 	}
@@ -28,4 +31,5 @@ class FieldController : BaseController
       Application.Quit();
     #endif
 	}
+
 }

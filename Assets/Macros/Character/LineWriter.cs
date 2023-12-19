@@ -1,15 +1,18 @@
 using Cysharp.Threading.Tasks;
-using System.Threading;
-using ScenarioFlow;
-using UnityEngine;
-using TMPro;
-using UnityEngine.UI;
 using DG.Tweening;
+using ScenarioFlow;
 using System;
 using System.Linq;
+using System.Threading;
+using TMPro;
 
-public class Communicator : IReflectable
+[ScenarioMethod("line")]
+public class LineWriter : IReflectable
 {
+    //キャラクターの名前を表示するテキスト
+    private readonly TextMeshProUGUI textActorName;
+    //キャラクターのセリフを表示するテキスト
+    private readonly TextMeshProUGUI textLine;
     //1文字ごとの表示間隔
     private readonly float characterInterval;
     //1文字の表示にかける時間
@@ -20,13 +23,11 @@ public class Communicator : IReflectable
     private readonly float textDuration;
     //テキストを一斉に表示/非表示させる時の透明度を変化させる方法
     private readonly Ease textEase;
-    private TextMeshProUGUI characterSpeakArea;
-    private TextMeshProUGUI characterNameArea;
-    public Communicator(Settings settings){
-        // characterSpeakArea = _characterSpeakArea.transform.GetChild(0).Find("SpeakArea").GetComponent<TextMeshProUGUI>();
-        // characterNameArea = _characterSpeakArea.transform.GetChild(0).Find("CharacterName").GetComponent<TextMeshProUGUI>();
-        characterSpeakArea = settings.characterSpeakArea;
-        characterNameArea = settings.characterNameArea;
+
+    public LineWriter(Settings settings)
+    {
+        this.textActorName = settings.TextActorName ?? throw new ArgumentNullException(nameof(settings.TextActorName));
+        this.textLine = settings.TextLine ?? throw new ArgumentNullException(nameof(settings.TextLine));
         this.characterInterval = settings.CharacterInterval;
         this.characterDuration = settings.CharacterDuration;
         this.characterEase = settings.CharacterEase;
@@ -34,24 +35,55 @@ public class Communicator : IReflectable
         this.textEase = settings.TextEase;
     }
 
-    [ScenarioMethod("talk")]
-    public async UniTask Talk(string characterName, string message, CancellationToken cancellationToken)
+    [ScenarioMethod("write", "キャラクターのセリフを表示する")]
+    public async UniTask WriteLineAsync(string actorName, string line, CancellationToken cancellationToken)
     {
-        // await UniTask.WhenAll(
-        //     // isDifferentActor ? SetTextAlphaAsync(textActorName, 0.0f, cancellationToken) : UniTask.CompletedTask,
-        //     SetTextAlphaAsync(characterSpeakArea, 0.0f, cancellationToken));
+        try
+        {
+            //前のキャラクターと異なるか
+            var isDifferentActor = textActorName.text != actorName;
 
-        characterNameArea.text = characterName;
-        characterSpeakArea.text = message;
-        Debug.Log(message);
-        await UniTask.WhenAll(
-            // isDifferentActor ? SetTextAlphaAsync(characterNameArea, 1.0f, cancellationToken) : UniTask.CompletedTask,
-            VisualizeTextInOrderAsync(characterSpeakArea, cancellationToken));
+            //セリフを消す
+            //前のセリフと異なるキャラクターなら名前も消す
+            await UniTask.WhenAll(
+                isDifferentActor ? SetTextAlphaAsync(textActorName, 0.0f, cancellationToken) : UniTask.CompletedTask,
+                SetTextAlphaAsync(textLine, 0.0f, cancellationToken));
+
+            //セリフとキャラクターの名前を設定
+            textActorName.text = actorName;
+            textLine.text = line;
+
+            //セリフを表示
+            //前のセリフと異なるキャラクターなら名前も表示
+            await UniTask.WhenAll(
+                isDifferentActor ? SetTextAlphaAsync(textActorName, 1.0f, cancellationToken) : UniTask.CompletedTask,
+                VisualizeTextInOrderAsync(textLine, cancellationToken));
+        }
+        finally
+        {
+            //最終的なテキストの状態
+            textActorName.alpha = 1.0f;
+            textActorName.text = actorName;
+            textLine.alpha = 1.0f;
+            textLine.text = line;
+        }
     }
-    [ScenarioMethod("shout")]
-    public void Shout(string message)
+
+    [ScenarioMethod("erase", "キャラクターのセリフを非表示にする")]
+    public async UniTask EraseLineAsync(CancellationToken cancellationToken)
     {
-        Debug.Log(message);
+        try
+        {
+            await UniTask.WhenAll(
+                SetTextAlphaAsync(textActorName, 0.0f, cancellationToken),
+                SetTextAlphaAsync(textLine, 0.0f, cancellationToken));
+        }
+        finally
+        {
+            //最終的なテキストの状態
+            textActorName.alpha = 0.0f;
+            textLine.alpha = 0.0f;
+        }
     }
 
     //テキストを順に表示する
@@ -87,6 +119,7 @@ public class Communicator : IReflectable
         }
     }
 
+    //テキストの透明度を徐々に変える
     private async UniTask SetTextAlphaAsync(TextMeshProUGUI textMeshProUGUI, float alpha, CancellationToken cancellationToken)
     {
         await textMeshProUGUI.DOFade(alpha, textDuration).SetEase(textEase).ToUniTask(cancellationToken: cancellationToken);
@@ -95,8 +128,8 @@ public class Communicator : IReflectable
     [Serializable]
     public class Settings
     {
-        public TextMeshProUGUI characterSpeakArea;
-        public TextMeshProUGUI characterNameArea;
+        public TextMeshProUGUI TextActorName;
+        public TextMeshProUGUI TextLine;
         public float CharacterInterval;
         public float CharacterDuration;
         public Ease CharacterEase;

@@ -84,6 +84,8 @@ crashlytics-build.properties
 /Assets/TextMesh Pro/**/*
 /Assets/AddressableAssetsData/**/*
 /Assets/Fonts/**/*
-/Assets/unity-chan!/**/*
 /Assets/Plugins/ScenarioFlow/**/*
 /Assets/Plugins/UniTask/**/*
+/Assets/Plugins/Demigiant/**/*
+
+/dest
