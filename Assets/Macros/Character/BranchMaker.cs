@@ -25,8 +25,6 @@ public class BranchMaker : IReflectable
     [ScenarioMethod("label.branch", "チャンネルの値が結び付けられているラベルへジャンプ\nJump to the label bound to the channel value.")]
     public void OpenSelectedLabel(string channelName, params string[] labelNames)
     {
-        Debug.Log("めじるし");
-        Debug.Log(channelName);
         //分岐先のラベルが0でないか
         if (labelNames.Length == 0)
         {
