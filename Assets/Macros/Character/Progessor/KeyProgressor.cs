@@ -33,8 +33,6 @@ public class KeyProgressor : INextProgressor, ICancellationProgressor
             .FirstOrDefaultAsync(cancellationToken: cancellationToken) :
             UniTask.Never(cancellationToken);
     }
-
-    [Serializable]
     public class Settings
     {
         public KeyCode[] KeyCodes;

@@ -22,10 +22,10 @@ public class ButtonBranchSelector : IBranchSelector
     public ButtonBranchSelector(Settings settings)
     {
         this.branchButtons = settings.BranchButtons;
-        this.displayDuration = settings.DisplayDuration;
-        this.displayEase = settings.DisplayEase;
-        this.hideDuration = settings.HideDuration;
-        this.hideEase = settings.HideEase;
+        this.displayDuration = 0;
+        this.displayEase = Ease.Linear;
+        this.hideDuration = 0;
+        this.hideEase = Ease.Linear;
         //分岐用ボタンの数をチェック
         if (branchButtons.Length == 0)
         {
@@ -98,9 +98,5 @@ public class ButtonBranchSelector : IBranchSelector
     public class Settings
     {
         public BranchButton[] BranchButtons;
-        public float DisplayDuration;
-        public Ease DisplayEase;
-        public float HideDuration;
-        public Ease HideEase;
     }
 }

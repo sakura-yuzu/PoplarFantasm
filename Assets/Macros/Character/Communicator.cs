@@ -29,11 +29,11 @@ public class Communicator : IReflectable
         // characterNameArea = _characterSpeakArea.transform.GetChild(0).Find("CharacterName").GetComponent<TextMeshProUGUI>();
         characterSpeakArea = settings.characterSpeakArea;
         characterNameArea = settings.characterNameArea;
-        this.characterInterval = settings.CharacterInterval;
-        this.characterDuration = settings.CharacterDuration;
-        this.characterEase = settings.CharacterEase;
-        this.textDuration = settings.TextDuration;
-        this.textEase = settings.TextEase;
+        this.characterInterval =  0;
+        this.characterDuration = 0;
+        this.characterEase = Ease.Linear;
+        this.textDuration = 0;
+        this.textEase = Ease.Linear;
     }
 
     [ScenarioMethod("talk")]
@@ -106,10 +106,5 @@ public class Communicator : IReflectable
     {
         public TextMeshProUGUI characterSpeakArea;
         public TextMeshProUGUI characterNameArea;
-        public float CharacterInterval;
-        public float CharacterDuration;
-        public Ease CharacterEase;
-        public float TextDuration;
-        public Ease TextEase;
     }
 }

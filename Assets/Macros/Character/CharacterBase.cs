@@ -13,15 +13,6 @@ class CharacterBase : FieldObjectBase
     private Communicator.Settings communicatorSettings;
 
     [SerializeField]
-    private KeyProgressor.Settings enterKeyProgressorSettings;
-    [SerializeField]
-    private KeyProgressor.Settings escapeKeyProgressorSettings;
-
-    [SerializeField]
-    private ButtonProgressor.Settings buttonProgressorSettings;
-    [SerializeField]
-    private BackgroundAnimator.Settings backgroundAnimatorSettings;
-    [SerializeField]
     private MissionDatabase missionDatabase;
     private MissionManager missionManager;
     //読み込むシナリオのソースファイル
@@ -40,24 +31,28 @@ class CharacterBase : FieldObjectBase
     private CancellationToken cancellationToken;
     private void Start()
     {
-       //CancellationTokenを取得
-       cancellationToken = this.GetCancellationTokenOnDestroy();
+        //CancellationTokenを取得
+        cancellationToken = this.GetCancellationTokenOnDestroy();
         //------Progressorの準備
+
+        KeyProgressor.Settings enterKeyProgressorSettings = new KeyProgressor.Settings();
+        enterKeyProgressorSettings.KeyCodes = new KeyCode[]{KeyCode.Return};
+
+        KeyProgressor.Settings escapeKeyProgressorSettings = new KeyProgressor.Settings();
+        escapeKeyProgressorSettings.KeyCodes = new KeyCode[]{KeyCode.Escape};
+
         var enterKeyProgressor = new KeyProgressor(enterKeyProgressorSettings);
         var escapeKeyProgressor = new KeyProgressor(escapeKeyProgressorSettings);
-        var buttonProgressor = new ButtonProgressor(buttonProgressorSettings);
 
         INextProgressor nextProgressor = new CompositeAnyNextProgressor(
             new INextProgressor[]
             {
                         enterKeyProgressor,
-                        buttonProgressor,
             });
         ICancellationProgressor cancellationProgressor = new CompositeAnyCancellationProgressor(
             new ICancellationProgressor[]
             {
                      escapeKeyProgressor,
-                     buttonProgressor,
             });
 
         //------ScenarioBookReaderの準備
@@ -102,10 +97,6 @@ class CharacterBase : FieldObjectBase
                                      new PrimitiveDecoder(),
                                      new AsyncDecoder(cancellationTokenDecoderTokenCodeDecorator),
                                      new TaskDecoder(cancellationTokenDecoderTokenCodeDecorator),
-                //    new LineWriter(lineWriterSettings),
-                //    new BackgroundAnimator(backgroundAnimatorSettings),
-                  //  new ActorAnimator(),
-                  //  new ActorConfigurator(),
                                      new MissionReceiver(missionManager),
                                      new DelayGenerator(),
                                      new ScenarioTaskDealer(scenarioTaskExecuter, cancellationTokenDecoder),
@@ -122,7 +113,7 @@ class CharacterBase : FieldObjectBase
 
     private async UniTask ReadScenarioBook()
     {
-         await scenarioBookReader.ReadScenarioBookAsync(scenarioBook, cancellationToken);
+        await scenarioBookReader.ReadScenarioBookAsync(scenarioBook, cancellationToken);
     }
 
     // 親クラスから呼ばれるコールバックメソッド (接触 & ボタン押したときに実行)
@@ -130,7 +121,8 @@ class CharacterBase : FieldObjectBase
     {
         // 会話をwindowのtextフィールドに表示
         // ScenarioMethodをすべて実行
-        if(characterSpeakArea.GetComponent<Canvas>().enabled == false){
+        if (characterSpeakArea.GetComponent<Canvas>().enabled == false)
+        {
             characterSpeakArea.GetComponent<Canvas>().enabled = true;
             await ReadScenarioBook();
         }
