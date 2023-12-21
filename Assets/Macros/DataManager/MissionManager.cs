@@ -18,4 +18,8 @@ public class MissionManager : MonoBehaviour
     public Mission findById(int id){
         return missionDatabase.findById(id);
     }
+
+    public List<Mission> findByStatus(Mission.Status status){
+        return missionDatabase.findByStatus(status);
+    }
 }

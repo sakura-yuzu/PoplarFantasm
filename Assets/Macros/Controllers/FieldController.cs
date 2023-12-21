@@ -9,16 +9,21 @@ class FieldController : BaseController
 	public Button saveButton;
 	public Button exitButton;
 
+	public Transform missionTable;
+
+	public MissionDatabase missionDatabase;
+
 	void Start(){
 		MainMenu.enabled = false;
 		CharacterSpeakArea.enabled = false;
 		saveButton.onClick.AddListener(base.Save);
 		exitButton.onClick.AddListener(Exit);
+		new MissionList(missionTable, missionDatabase, Mission.Status.Received);
 	}
 
 	void Update(){
 		if(Input.GetKeyDown("q")){
-			Debug.Log('Q');
+			// Debug.Log('Q');
 			MainMenu.enabled = !MainMenu.enabled;
 		}
 	}

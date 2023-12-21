@@ -10,6 +10,7 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac26b70b353c44444a117a8b1b8f7989, type: 3}
-  m_Name: New Mission Database
+  m_Name: MissionDatabase
   m_EditorClassIdentifier: 
-  missionList: []
+  missionList:
+  - {fileID: 11400000, guid: 6fab4a343119b4e48bbae906fb9bdefc, type: 2}
