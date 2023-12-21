@@ -24,4 +24,8 @@ public class Mission : ScriptableObject
         Received,   // 受注
         Cleared,    // クリア済み
     }
+
+    public void Receive(){
+        this.status = Status.Received;
+    }
 }

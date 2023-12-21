@@ -7,6 +7,8 @@ using UnityEngine.UI;
 using DG.Tweening;
 using System;
 using System.Linq;
+using UnityEngine.Localization;
+using UnityEngine.Localization.Components;
 
 public class Communicator : IReflectable
 {
@@ -43,6 +45,13 @@ public class Communicator : IReflectable
 
         characterNameArea.text = characterName;
         characterSpeakArea.text = message;
+
+        // ローカライズ
+        // LocalizedString localizedString = new LocalizedString { TableReference = "StringTable", TableEntryReference = message };
+        // var localizeStringEvent = characterSpeakArea.GetComponent<LocalizeStringEvent>();
+        // localizeStringEvent.StringReference = localizedString;
+        // localizeStringEvent.RefreshString();
+
         Debug.Log(message);
         await UniTask.WhenAll(
             // isDifferentActor ? SetTextAlphaAsync(characterNameArea, 1.0f, cancellationToken) : UniTask.CompletedTask,

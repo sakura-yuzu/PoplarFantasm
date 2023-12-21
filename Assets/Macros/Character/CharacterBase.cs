@@ -21,6 +21,9 @@ class CharacterBase : FieldObjectBase
     private ButtonProgressor.Settings buttonProgressorSettings;
     [SerializeField]
     private BackgroundAnimator.Settings backgroundAnimatorSettings;
+    [SerializeField]
+    private MissionDatabase missionDatabase;
+    private MissionManager missionManager;
     //読み込むシナリオのソースファイル
     [SerializeField]
     private ExcelAsset excelAsset;
@@ -87,6 +90,8 @@ class CharacterBase : FieldObjectBase
            cancellationTokenDecoderTokenCodeDecorator,
         };
 
+        missionManager = new MissionManager(missionDatabase);
+
         IScenarioMethodSearcher scenarioMethodSearcher =
                 new ScenarioMethodSearcher(
                         new IReflectable[]
@@ -101,6 +106,7 @@ class CharacterBase : FieldObjectBase
                 //    new BackgroundAnimator(backgroundAnimatorSettings),
                   //  new ActorAnimator(),
                   //  new ActorConfigurator(),
+                                     new MissionReceiver(missionManager),
                                      new DelayGenerator(),
                                      new ScenarioTaskDealer(scenarioTaskExecuter, cancellationTokenDecoder),
                                      new BranchRecorder(channelMediator, new ButtonBranchSelector(buttonBranchSelectorSettings)),
