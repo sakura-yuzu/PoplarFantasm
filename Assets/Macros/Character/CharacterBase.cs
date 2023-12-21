@@ -5,6 +5,8 @@ using ScenarioFlow.TaskFlow;
 using System;
 using System.Threading;
 using UnityEngine;
+using TMPro;
+using UnityEngine.AddressableAssets;
 class CharacterBase : FieldObjectBase
 {
     public GameObject characterSpeakArea;
@@ -126,5 +128,17 @@ class CharacterBase : FieldObjectBase
             characterSpeakArea.GetComponent<Canvas>().enabled = true;
             await ReadScenarioBook();
         }
+    }
+
+    [ContextMenu("AttachObjects")]
+    private void AttachObjects(){
+        characterSpeakArea = GameObject.Find("CharacterSpeakArea");
+        communicatorSettings.characterNameArea = GameObject.Find("CharacterName").GetComponent<TextMeshProUGUI>();
+        communicatorSettings.characterSpeakArea = GameObject.Find("SpeakArea").GetComponent<TextMeshProUGUI>();
+        windowCloserSettings.characterSpeakArea = GameObject.Find("CharacterSpeakArea");
+        buttonBranchSelectorSettings.BranchButtons = new BranchButton[]{
+            GameObject.Find("BranchButton").GetComponent<BranchButton>(),
+            GameObject.Find("BranchButton (1)").GetComponent<BranchButton>(),
+        };
     }
 }
