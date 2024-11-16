@@ -16,6 +16,8 @@ public class CharacterControlScript : MonoBehaviour
 
     Vector3 targetDirection;        //移動する方向のベクトル
     Vector3 moveDirection = Vector3.zero;
+    public float rayDistance = 20f;
+    bool isGrounded = false;
 
 
     // Start関数は変数を初期化するための関数
@@ -27,7 +29,7 @@ public class CharacterControlScript : MonoBehaviour
     // Update関数は1フレームに１回実行される
     void Update()
     {
-
+        groundCheck(); //接地判定
         moveControl();  //移動用関数
         RotationControl(); //旋回用関数
 
@@ -51,9 +53,8 @@ public class CharacterControlScript : MonoBehaviour
         //カメラの方向を考慮したキャラの進行方向を計算
         targetDirection = h * right + v * forward;
 
-
-        //★地上にいる場合の処理
-        if (controller.isGrounded)
+        //  ★地上にいる場合の処理
+        if (isGrounded)
         {
             //移動のベクトルを計算
             moveDirection = targetDirection * speed;
@@ -68,20 +69,20 @@ public class CharacterControlScript : MonoBehaviour
         {
             float tempy = moveDirection.y;
             //(↓の２文の処理があると空中でも入力方向に動けるようになる)
-            moveDirection = Vector3.Scale(targetDirection, new Vector3(1, 0, 1)).normalized; //◆ コメントアウト解除
-            moveDirection *= speed; //◆ コメントアウト解除
+            // moveDirection = Vector3.Scale(targetDirection, new Vector3(1, 0, 1)).normalized; //◆ コメントアウト解除
+            // moveDirection *= speed; //◆ コメントアウト解除
             moveDirection.y = tempy - gravity * Time.deltaTime;
         }
 
         //★走行アニメーション管理
-        if (v > .1 || v < -.1 || h > .1 || h < -.1) //(移動入力があると)
-        {
-            animator.SetFloat("Speed", 1f); //キャラ走行のアニメーションON
-        }
-        else    //(移動入力が無いと)
-        {
-            animator.SetFloat("Speed", 0f); //キャラ走行のアニメーションOFF
-        }
+        // if (v > .1 || v < -.1 || h > .1 || h < -.1) //(移動入力があると)
+        // {
+        //     animator.SetFloat("Speed", 1f); //キャラ走行のアニメーションON
+        // }
+        // else    //(移動入力が無いと)
+        // {
+        //     animator.SetFloat("Speed", 0f); //キャラ走行のアニメーションOFF
+        // }
     }
 
     void RotationControl()  //キャラクターが移動方向を変えるときの処理
@@ -92,11 +93,21 @@ public class CharacterControlScript : MonoBehaviour
         //それなりに移動方向が変化する場合のみ移動方向を変える
         if (rotateDirection.sqrMagnitude > 0.01)
         {
-            transform.rotation = Quaternion.LookRotation(rotateDirection);
             //緩やかに移動方向を変える
             float step = rotateSpeed * Time.deltaTime;
             Vector3 newDir = Vector3.Slerp(transform.forward, rotateDirection, step);
             transform.rotation = Quaternion.LookRotation(newDir);
         }
+    }
+
+    void groundCheck()
+    {
+        Vector3 rayPosition = transform.position + new Vector3(0.0f, 0.1f, 0.0f);
+        Ray ray = new Ray(rayPosition, Vector3.down);
+        isGrounded = Physics.Raycast(ray, rayDistance);
+
+        Debug.Log(isGrounded);
+        Debug.DrawRay(transform.position + new Vector3(0.0f, 0.1f, 0.0f), 
+                      Vector3.down * rayDistance, Color.red, 100);
     }
 }
