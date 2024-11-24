@@ -7,11 +7,11 @@ using UnityEngine.UI;
 
 class ModeSelector : ToggleGroupBase
 {
+	public ToggleGroup toggleGroup;
 	public async UniTask<string> selectAsync(){
-
 		await UniTask.WhenAny(waitKeyDown(), waitMouseClick());
 
-		Toggle selected = this.gameObject.GetComponent<ToggleGroup>().ActiveToggles().First<Toggle>();
+		Toggle selected = toggleGroup.ActiveToggles().First<Toggle>();
 		string value = selected.GetComponent<ButtonWithValue>().value;
 
 		return value;

@@ -27,4 +27,6 @@ public class SaveData : ScriptableObject
 
     public int attackPower;
     public int defensePower;
+
+    public List<Item> items;
 }

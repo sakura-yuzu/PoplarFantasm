@@ -106,8 +106,8 @@ public class CharacterControlScript : MonoBehaviour
         Ray ray = new Ray(rayPosition, Vector3.down);
         isGrounded = Physics.Raycast(ray, rayDistance);
 
-        Debug.Log(isGrounded);
-        Debug.DrawRay(transform.position + new Vector3(0.0f, 0.1f, 0.0f), 
-                      Vector3.down * rayDistance, Color.red, 100);
+        // Debug.Log(isGrounded);
+        // Debug.DrawRay(transform.position + new Vector3(0.0f, 0.1f, 0.0f), 
+        //               Vector3.down * rayDistance, Color.red, 100);
     }
 }

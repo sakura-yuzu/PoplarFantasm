@@ -83,6 +83,7 @@ crashlytics-build.properties
 # 外部パッケージ
 /Assets/TextMesh Pro/**/*
 /Assets/AddressableAssetsData/**/*
+/Assets/Fantasy Skybox FREE/**/*
 /Assets/Fonts/**/*
 /Assets/Plugins/ScenarioFlow/**/*
 /Assets/Plugins/UniTask/**/*

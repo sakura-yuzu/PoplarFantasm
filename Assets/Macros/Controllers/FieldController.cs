@@ -4,27 +4,42 @@ using UnityEngine.UI;
 
 class FieldController : BaseController
 {
-	public Canvas MainMenu;
+	public GameObject MainMenu;
 	public Canvas CharacterSpeakArea;
 	public Button saveButton;
 	public Button exitButton;
 
 	public Transform missionTable;
 
+	private string test="piyo";
+
 	public MissionDatabase missionDatabase;
 
+	private bool menuOpen = false;
+
 	void Start(){
-		MainMenu.enabled = false;
+		Debug.Log("Start");
+		Debug.Log(test);
+		// マップの読み込み
+
+		// NPCの設定
+		// PCの設定
+		MainMenu.SetActive(false);
 		CharacterSpeakArea.enabled = false;
 		saveButton.onClick.AddListener(base.Save);
 		exitButton.onClick.AddListener(Exit);
 		new MissionList(missionTable, missionDatabase, Mission.Status.Received);
+		test = "hoge";
 	}
 
 	void Update(){
 		if(Input.GetKeyDown("q")){
-			// Debug.Log('Q');
-			MainMenu.enabled = !MainMenu.enabled;
+			Debug.Log('Q');
+			menuOpen = !menuOpen;
+			MainMenu.SetActive(menuOpen);
+		}
+		if(Input.GetKeyDown("e")){
+			SceneManager.LoadSceneAsync("FieldScene");
 		}
 	}
 
