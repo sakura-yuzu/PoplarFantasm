@@ -22,11 +22,12 @@ public abstract class FieldObjectBase : MonoBehaviour
         }
     }
     private void Update() {
-        if (isContacted && Input.GetKeyDown(KeyCode.Return)) {
+        if (Input.GetKeyDown(KeyCode.Return)) {
             // Debug.Log("目印GetKeyDown");
             OnAction();
         }
     }
 
     protected abstract void OnAction();
+
 }

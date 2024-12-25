@@ -88,5 +88,6 @@ crashlytics-build.properties
 /Assets/Plugins/ScenarioFlow/**/*
 /Assets/Plugins/UniTask/**/*
 /Assets/Plugins/Demigiant/**/*
+/Assets/SAColliderBuilder/**/*
 
 /dest
