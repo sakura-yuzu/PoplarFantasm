@@ -20,10 +20,12 @@ class CameraController : MonoBehaviour
 		diff = playerPosition - cameraPosition;
 	}
 
-	void Update()
+	void LateUpdate()
 	{
 		playerPosition = player.GetComponent<Transform>().position;
 		cameraPosition = playerPosition - diff;
+		// Debug.Log("playerPosition:" + playerPosition);
+		// Debug.Log("diff:" + diff);
 		transform.position = cameraPosition;
 
 		// 右スティック入力
